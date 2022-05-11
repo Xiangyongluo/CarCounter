@@ -198,7 +198,7 @@ while True:
 	for (objectID, centroid) in objects.items():
 		# check to see if a trackable object exists for the current
 		# object ID
-		to = trackableObjects.get(objectID, None)
+		to = trackableObjects.get(objectID)
 
 		# if there is no existing trackable object, create one
 		if to is None:
@@ -213,7 +213,7 @@ while True:
 			# 'left' and positive for 'right')
 
 			x = [c[0] for c in to.centroids]
-                        
+
 			direction = centroid[0] - np.mean(x)                     
 
 			to.centroids.append(centroid)
@@ -223,7 +223,6 @@ while True:
 				# if the direction is negative (indicating the object
 				# is moving left) AND the centroid is left of the center
 				# line, count the object
-
                                 #10 = hysteresis (to prevent false positives if a car doesn't move)
 				if direction < -10 and centroid[0] < W // 2:
 					totalLeft += 1
@@ -232,7 +231,6 @@ while True:
 				# if the direction is positive (indicating the object
 				# is moving right) AND the centroid is right of the
 				# center line, count the object
-
                                 #10 = hysteresis (to prevent false positives if a car doesn't move)
 				elif direction > 10 and centroid[0] > W // 2:
 					totalRight += 1
@@ -243,7 +241,7 @@ while True:
 
 		# draw both the ID of the object and the centroid of the
 		# object on the output frame
-		text = "ID {}".format(objectID)
+		text = f"ID {objectID}"
 		cv2.putText(frame, text, (centroid[0] - 10, centroid[1] - 10),
 			cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 		cv2.circle(frame, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
@@ -258,7 +256,7 @@ while True:
 
 	# loop over the info tuples and draw them on our frame
 	for (i, (k, v)) in enumerate(info):
-		text = "{}: {}".format(k, v)
+		text = f"{k}: {v}"
 		cv2.putText(frame, text, (10, H - ((i * 20) + 20)),
 			cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
 

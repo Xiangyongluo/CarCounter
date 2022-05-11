@@ -68,12 +68,9 @@ class CentroidTracker:
 		# if we are currently not tracking any objects take the input
 		# centroids and register each of them
 		if len(self.objects) == 0:
-			for i in range(0, len(inputCentroids)):
+			for i in range(len(inputCentroids)):
 				self.register(inputCentroids[i])
 
-		# otherwise, are are currently tracking objects so we need to
-		# try to match the input centroids to existing object
-		# centroids
 		else:
 			# grab the set of object IDs and corresponding centroids
 			objectIDs = list(self.objects.keys())
@@ -131,8 +128,8 @@ class CentroidTracker:
 
 			# compute both the row and column index we have NOT yet
 			# examined
-			unusedRows = set(range(0, D.shape[0])).difference(usedRows)
-			unusedCols = set(range(0, D.shape[1])).difference(usedCols)
+			unusedRows = set(range(D.shape[0])).difference(usedRows)
+			unusedCols = set(range(D.shape[1])).difference(usedCols)
 
 			# in the event that the number of object centroids is
 			# equal or greater than the number of input centroids
